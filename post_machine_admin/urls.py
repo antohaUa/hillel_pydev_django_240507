@@ -24,6 +24,7 @@ urlpatterns = [
     path('user/', user.views.user_page),
     path('login/', user.views.login_page),
     path('register/', user.views.register_page),
+    path('logout/', user.views.logout_page),
     path('parcel/', include('parcel.urls')),
     path('post_machine/', include('post_machine.urls'))
 ]
