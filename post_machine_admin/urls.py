@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', user.views.root_page),
     path('admin/', admin.site.urls),
     path('user/', user.views.user_page),
     path('login/', user.views.login_page),
