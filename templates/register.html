@@ -17,23 +17,28 @@
     {% csrf_token %}
 <div class="form-group first">
 <label>Username</label>
-<input type="text" class="form-control" name="username">
+{{ form.username }}
+<!-- <input type="text" class="form-control" name="username"> -->
 </div>
 <div class="form-group last mb-3">
 <label>Password</label>
-<input type="password" class="form-control" name="password">
+{{ form.password }}
+<!--  <input type="password" class="form-control" name="password"> -->
 </div>
 <div class="form-group middle">
 <label>Email</label>
-<input type="text" class="form-control" name="email">
+{{ form.email }}
+<!-- <input type="text" class="form-control" name="email"> -->
 </div>
 <div class="form-group middle">
 <label>First Name</label>
-<input type="text" class="form-control" name="first_name">
+{{ form.first_name }}
+<!-- <input type="text" class="form-control" name="first_name"> -->
 </div>
 <div class="form-group middle">
 <label>Last Name</label>
-<input type="text" class="form-control" name="last_name">
+{{ form.last_name }}
+<!-- <input type="text" class="form-control" name="last_name"> -->
 </div>
 <input type="submit" value="Register" class="btn btn-block btn-primary">
 </form>

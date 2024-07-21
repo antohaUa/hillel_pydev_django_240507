@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block style%}
+a:link, a:visited, a:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: grey;
+  background-color: transparent;
+  text-decoration: underline;
+}
+{% endblock %}
+
+{% block content %}
+<div class="d-lg-flex half">
+<div class="bg order-1 order-md-2" style="background-image: url('/static/p_locker2.jpg');"></div>
+<div class="contents order-2 order-md-1">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<div class="col-md-7">
+<h3>Post Machine [{{ post_machine.id }}]:</h3>
+<p class="mb-4">Post Machine Data</p>
+<br/>
+    <div class="form-group first">
+    <h6 ><b>&nbsp;&nbsp;&#9993; City</b>: {{ post_machine.city }}</h6>
+    <img src="/static/post_machine2.png" width="200" height="160"/>
+    <label><b>&#8962; Address</b>: {{ post_machine.address }} </label>
+    <br/><hr/>
+    </div>
+    <br/>
+</div>
+
+<div class="col-md-7">
+<h5>Lockers [{{ post_machine.id }}]:</h5>
+<p class="mb-4">Lockers Data</p>
+<br/>
+    {% for locker in lockers %}
+    <div class="form-group first">
+    <p>[{{ forloop.counter }}]</p>
+    <img src="/static/locker_ico.png" width="30" height="30"/>
+    <h6><b>ID:</b>{{ locker.id }} &nbsp;&nbsp;<b>Size:</b> {{ locker.size }}&nbsp;&nbsp;<b>Status:</b> {{ locker.status }}</h6>
+    <hr/>
+    </div>
+   {% endfor %}
+    <button class="btn btn-block btn-primary"><a href="/post_machine/">Back to Post Machines</a></button>
+    <br/>
+    <br/>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
