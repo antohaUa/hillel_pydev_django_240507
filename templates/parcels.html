@@ -35,7 +35,16 @@ a:hover {
         <br/>
     <label>Sender: {{ c_parcel.sender }}</label>
         <br/>
-    <label>Status: {{ c_parcel.status }}</label>
+    <label>Status:
+        &nbsp;<b><i>
+        {% if c_parcel.status %}
+        Delivered at: {{ c_parcel.open_datetime }}
+        {% elif c_parcel.locker is None %}
+        On the way
+        {% else %}
+        In locker
+        {% endif %}
+        </i></b></label>
 
     </div>
     <br/><hr/>

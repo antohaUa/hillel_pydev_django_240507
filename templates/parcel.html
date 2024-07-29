@@ -32,10 +32,25 @@ a:hover {
         <br/>
     <label>Sender: {{ sender }}</label>
         <br/>
-    <label>Status: {{ status }}</label>
+    <label>Status: &nbsp;<b><i>
+        {% if status %}
+        Delivered at: {{ open_datetime }}
+        {% elif locker is None %}
+        On the way
+        {% else %}
+        In locker
+        {% endif %}
+        </i></b></label>
     </div>
     <br/><hr/>
     <br/>
+    {% if locker is not None and status is False %}
+    <form action="/parcel/{{id}}" method="post">
+    <input type="hidden" name="parcel_id" value="{{id}}">
+    <input type="submit" value="Receive parcel" class="btn btn-block btn-primary">
+    </form>
+    <br/>
+    {% endif %}
     <button class="btn btn-block btn-primary"><a href="/parcel/">Back to Parcels</a></button>
 </div>
 </div>
