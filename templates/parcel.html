@@ -45,7 +45,8 @@ a:hover {
     <br/><hr/>
     <br/>
     {% if locker is not None and status is False %}
-    <form action="/parcel/{{id}}" method="post">
+    <form action="/parcel/{{id}}/" method="post">
+    {% csrf_token %}
     <input type="hidden" name="parcel_id" value="{{id}}">
     <input type="submit" value="Receive parcel" class="btn btn-block btn-primary">
     </form>

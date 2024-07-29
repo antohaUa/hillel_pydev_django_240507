@@ -25,7 +25,7 @@ def parcel_view(request, parcel_id):
             parcel.order_datetime = datetime.datetime.now()
         parcel.save()
 
-        parcel.locker.status = True
+        parcel.locker.status = False  # False == no parcel inside
         parcel.locker.save()
         return redirect('/parcel')
 
