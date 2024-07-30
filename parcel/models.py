@@ -1,11 +1,7 @@
-import logging
 from django.db import models
 from django.contrib.auth.models import User
 from post_machine.models import PostMachine, Locker
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
-_log = logging.getLogger(__name__)
 
 class Parcel(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -19,15 +15,3 @@ class Parcel(models.Model):
 
     def __str__(self):
         return f'{self.pk} - {self.recipient} - {self.post_machine_recipient} - {self.locker}'
-
-
-@receiver(post_save, sender=Parcel)
-def update_locker_status(sender, instance, created, **kwargs):
-    """Update locker status if Parcel fired."""
-    if instance.status is False:
-        if instance.locker is not None:
-            parcel_locker = Locker.objects.get(pk=instance.locker.pk)
-            parcel_locker.status = True
-            parcel_locker.save()
-            _log.warning(f'Locker status updated for parcel: {instance}')
-
