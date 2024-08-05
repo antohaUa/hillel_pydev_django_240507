@@ -23,8 +23,8 @@ urlpatterns = [
     path('', user.views.root_page),
     path('admin/', admin.site.urls),
     path('user/', user.views.user_page),
-    path('login/', user.views.login_page),
-    path('register/', user.views.register_page),
+    path('login/', user.views.LoginPage.as_view()),
+    path('register/', user.views.RegisterPage.as_view()),
     path('logout/', user.views.logout_page),
     path('parcel/', include('parcel.urls')),
     path('post_machine/', include('post_machine.urls'))

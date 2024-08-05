@@ -2,23 +2,51 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views import View
 
 from .forms import LoginForm, RegisterForm
 
 
-def login_page(request):
-    """Login handler."""
+class LoginPage(View):
+    """Class based view for login."""
     context = {}
-    if request.method == 'POST':
+
+    def get(self, request):
+        """Login page."""
+        self.context['form'] = LoginForm()
+        return render(request, 'login.html', context=self.context)
+
+    def post(self, request):
+        """Authentication."""
         form = LoginForm(request.POST)
         if form.is_valid():
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
                 return redirect('/user/')
-        context['error'] = 'Invalid username or password'
-    context['form'] = LoginForm()
-    return render(request, 'login.html', context=context)
+        self.context['error'] = 'Invalid username or password'
+        return render(request, 'login.html', context=self.context)
+
+
+class RegisterPage(View):
+    """Class based view for registration."""
+
+    @staticmethod
+    def get(request):
+        """Register page."""
+        return render(request, 'register.html', context={'form': RegisterForm()})
+
+    @staticmethod
+    def post(request):
+        """Registration."""
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(username=form.cleaned_data['username'],
+                                            password=form.cleaned_data['password'], email=form.cleaned_data['email'],
+                                            first_name=form.cleaned_data['first_name'],
+                                            last_name=form.cleaned_data['last_name'])
+            user.save()
+        return redirect('/login/')
 
 
 def logout_page(request):
@@ -28,20 +56,6 @@ def logout_page(request):
 
 def root_page(request):
     return redirect('/post_machine/')
-
-
-def register_page(request):
-    """Register new user handler."""
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = User.objects.create_user(username=form.cleaned_data['username'],
-                                            password=form.cleaned_data['password'], email=form.cleaned_data['email'],
-                                            first_name=form.cleaned_data['first_name'],
-                                            last_name=form.cleaned_data['last_name'])
-            user.save()
-        return redirect('/login/')
-    return render(request, 'register.html', context={'form': RegisterForm()})
 
 
 @login_required()
